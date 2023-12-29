@@ -93,14 +93,23 @@ class _TimerState extends State<Timer> with SingleTickerProviderStateMixin {
                 width: 10,
               ),
               Expanded(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: LinearProgressIndicator(
-                    value: animationValue,
-                    minHeight: 15,
-                    backgroundColor: Colors.white,
-                    valueColor:
-                        const AlwaysStoppedAnimation<Color>(Colors.blue),
+                child: Container(
+                  decoration: BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 10,
+                      offset: const Offset(0, 6),
+                    )
+                  ]),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: LinearProgressIndicator(
+                      value: animationValue,
+                      minHeight: 15,
+                      backgroundColor: Colors.white,
+                      valueColor:
+                          const AlwaysStoppedAnimation<Color>(Colors.blue),
+                    ),
                   ),
                 ),
               ),
@@ -109,10 +118,40 @@ class _TimerState extends State<Timer> with SingleTickerProviderStateMixin {
               )
             ],
           ),
-          Text(
-            'Time Remaining: ${totalTime! - time!} Seconds',
-            style: const TextStyle(color: Colors.white, fontSize: 15),
-          )
+          Text.rich(
+            TextSpan(
+              text: 'Remaining time ',
+              style:
+                  const TextStyle(color: Colors.white, fontSize: 15, shadows: [
+                Shadow(
+                  blurRadius: 10.0,
+                  color: Color.fromARGB(79, 0, 0, 0),
+                  offset: Offset(5.0, 5.0),
+                ),
+              ]),
+              children: <InlineSpan>[
+                TextSpan(
+                    text: '${totalTime! - time!}',
+                    style:
+                        const TextStyle(fontWeight: FontWeight.bold, shadows: [
+                      Shadow(
+                        blurRadius: 10.0,
+                        color: Color.fromARGB(79, 0, 0, 0),
+                        offset: Offset(5.0, 5.0),
+                      ),
+                    ])),
+                const TextSpan(
+                    text: ' Seconds',
+                    style: TextStyle(shadows: [
+                      Shadow(
+                        blurRadius: 10.0,
+                        color: Color.fromARGB(79, 0, 0, 0),
+                        offset: Offset(5.0, 5.0),
+                      ),
+                    ])),
+              ],
+            ),
+          ),
         ],
       ),
     );

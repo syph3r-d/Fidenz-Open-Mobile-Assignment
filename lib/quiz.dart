@@ -68,16 +68,25 @@ class _QuizState extends State<Quiz> {
               submitAnswer: submitAnswer,
               stream: streamController.stream,
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child:
-                  question['question'] != null && question['question'] is String
-                      ? Image.network(question['question'])
-                      : Container(
-                          width: double.infinity,
-                          height: 100,
-                          color: Colors.grey,
-                        ),
+            Container(
+              decoration: const BoxDecoration(boxShadow: [
+                BoxShadow(
+                  blurRadius: 10.0,
+                  color: Color.fromARGB(79, 0, 0, 0),
+                  offset: Offset(5.0, 5.0),
+                ),
+              ]),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: question['question'] != null &&
+                        question['question'] is String
+                    ? Image.network(question['question'])
+                    : Container(
+                        width: double.infinity,
+                        height: 100,
+                        color: Colors.grey,
+                      ),
+              ),
             ),
             Numberpad(
                 selectNumber: selectNumber,

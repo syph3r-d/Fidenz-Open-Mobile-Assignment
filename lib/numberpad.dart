@@ -123,7 +123,7 @@ class _NumberpadState extends State<Numberpad> {
                   Text(
                     'Submit',
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 30,
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
                         ..strokeWidth = 2
@@ -132,7 +132,7 @@ class _NumberpadState extends State<Numberpad> {
                   ),
                   const Text(
                     'Submit',
-                    style: TextStyle(fontSize: 17, color: Colors.white),
+                    style: TextStyle(fontSize: 30, color: Colors.white),
                   )
                 ]),
               )
