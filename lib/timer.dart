@@ -77,7 +77,18 @@ class _TimerState extends State<Timer> with SingleTickerProviderStateMixin {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Icon(Icons.timer_sharp, color: Colors.white, size: 50),
+              const Icon(
+                Icons.timer_sharp,
+                color: Colors.white,
+                size: 50,
+                shadows: [
+                  Shadow(
+                    blurRadius: 10.0,
+                    color: Color.fromARGB(79, 0, 0, 0),
+                    offset: Offset(5.0, 5.0),
+                  ),
+                ],
+              ),
               const SizedBox(
                 width: 10,
               ),

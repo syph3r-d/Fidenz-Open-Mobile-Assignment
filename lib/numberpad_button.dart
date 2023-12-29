@@ -18,10 +18,17 @@ class _NumberpadButtonState extends State<NumberpadButton> {
       margin: const EdgeInsets.all(10),
       child: ElevatedButton(
         onPressed: widget.onPressed,
-        child: Text(widget.text),
+        child: Text(
+          widget.text,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+        ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: widget.active ? Colors.purple : Colors.white,
-          foregroundColor: widget.active ? Colors.white : Colors.purple,
+          backgroundColor:
+              widget.active ? Colors.green : Color.fromARGB(255, 220, 220, 220),
+          foregroundColor: widget.active ? Colors.white : Colors.black,
+          side: widget.active
+              ? const BorderSide(width: 2, color: Colors.purple)
+              : BorderSide.none,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
