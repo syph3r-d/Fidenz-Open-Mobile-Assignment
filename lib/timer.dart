@@ -11,7 +11,6 @@ class Timer extends StatefulWidget {
   _TimerState createState() => _TimerState();
 }
 
-// create progress bar timer animation
 
 class _TimerState extends State<Timer> with SingleTickerProviderStateMixin {
   AnimationController? controller;

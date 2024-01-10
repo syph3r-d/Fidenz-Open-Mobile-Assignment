@@ -32,23 +32,17 @@ class _NumberpadState extends State<Numberpad> {
             children: [
               NumberpadButton(
                 text: '1',
-                onPressed: () {
-                  widget.selectNumber('1');
-                },
-                active: widget.selectedNumber == '1',
+                onPressed: widget.selectNumber,
+                activeNumber: widget.selectedNumber,
               ),
               NumberpadButton(
                   text: '2',
-                  onPressed: () {
-                    widget.selectNumber('2');
-                  },
-                  active: widget.selectedNumber == '2'),
+                  onPressed: widget.selectNumber,
+                  activeNumber: widget.selectedNumber),
               NumberpadButton(
                   text: '3',
-                  onPressed: () {
-                    widget.selectNumber('3');
-                  },
-                  active: widget.selectedNumber == '3'),
+                  onPressed: widget.selectNumber,
+                  activeNumber: widget.selectedNumber),
             ],
           ),
           Row(
@@ -56,22 +50,16 @@ class _NumberpadState extends State<Numberpad> {
             children: [
               NumberpadButton(
                   text: '4',
-                  onPressed: () {
-                    widget.selectNumber('4');
-                  },
-                  active: widget.selectedNumber == '4'),
+                  onPressed: widget.selectNumber,
+                  activeNumber: widget.selectedNumber),
               NumberpadButton(
                   text: '5',
-                  onPressed: () {
-                    widget.selectNumber('5');
-                  },
-                  active: widget.selectedNumber == '5'),
+                  onPressed: widget.selectNumber,
+                  activeNumber: widget.selectedNumber),
               NumberpadButton(
                   text: '6',
-                  onPressed: () {
-                    widget.selectNumber('6');
-                  },
-                  active: widget.selectedNumber == '6'),
+                  onPressed: widget.selectNumber,
+                  activeNumber: widget.selectedNumber),
             ],
           ),
           Row(
@@ -79,22 +67,16 @@ class _NumberpadState extends State<Numberpad> {
             children: [
               NumberpadButton(
                   text: '7',
-                  onPressed: () {
-                    widget.selectNumber('7');
-                  },
-                  active: widget.selectedNumber == '7'),
+                  onPressed: widget.selectNumber,
+                  activeNumber: widget.selectedNumber),
               NumberpadButton(
                   text: '8',
-                  onPressed: () {
-                    widget.selectNumber('8');
-                  },
-                  active: widget.selectedNumber == '8'),
+                  onPressed: widget.selectNumber,
+                  activeNumber: widget.selectedNumber),
               NumberpadButton(
                   text: '9',
-                  onPressed: () {
-                    widget.selectNumber('9');
-                  },
-                  active: widget.selectedNumber == '9'),
+                  onPressed: widget.selectNumber,
+                  activeNumber: widget.selectedNumber),
             ],
           ),
           Row(
@@ -102,10 +84,8 @@ class _NumberpadState extends State<Numberpad> {
             children: [
               NumberpadButton(
                   text: '0',
-                  onPressed: () {
-                    widget.selectNumber('0');
-                  },
-                  active: widget.selectedNumber == '0'),
+                  onPressed: widget.selectNumber,
+                  activeNumber: widget.selectedNumber),
               const SizedBox(
                 width: 10,
               ),
