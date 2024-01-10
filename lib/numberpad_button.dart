@@ -4,23 +4,17 @@ class NumberpadButton extends StatefulWidget {
   NumberpadButton(
       {required this.text,
       required this.onPressed,
-      required this.activeNumber});
+      required this.active});
   final String text;
   final void Function(String) onPressed;
-  final String activeNumber;
+  final bool active;
 
   @override
   _NumberpadButtonState createState() => _NumberpadButtonState();
 }
 
 class _NumberpadButtonState extends State<NumberpadButton> {
-  bool active = false;
 
-  @override
-  void initState() {
-    super.initState();
-    active = widget.activeNumber == widget.text;
-  }
 
   void onPressed() {
     widget.onPressed(widget.text);
@@ -33,11 +27,11 @@ class _NumberpadButtonState extends State<NumberpadButton> {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: active
+          backgroundColor: widget.active
               ? Colors.green
               : const Color.fromARGB(255, 220, 220, 220),
-          foregroundColor: active ? Colors.white : Colors.black,
-          side: active
+          foregroundColor: widget.active ? Colors.white : Colors.black,
+          side: widget.active
               ? const BorderSide(width: 2, color: Colors.purple)
               : BorderSide.none,
           shape: const RoundedRectangleBorder(
