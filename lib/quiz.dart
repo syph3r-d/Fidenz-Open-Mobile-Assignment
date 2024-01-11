@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:quiz_game/numberpad.dart';
+import 'package:quiz_game/answer_status_popup.dart';
 import 'package:http/http.dart' as http;
 import 'package:quiz_game/timer.dart';
 import 'dart:async';
@@ -12,17 +13,19 @@ class Quiz extends StatefulWidget {
   const Quiz(
       {Key? key,
       required this.scoreIncrement,
-      required this.quizCountIncrement})
+      required this.quizCountIncrement,
+      required this.exitQuiz})
       : super(key: key);
 
   final void Function() scoreIncrement;
   final void Function() quizCountIncrement;
+  final void Function() exitQuiz;
 
   @override
   _QuizState createState() => _QuizState();
 }
 
-class _QuizState extends State<Quiz> {
+class _QuizState extends State<Quiz>  {
   String selectedNumber = '10';
   Map<String, dynamic> question = {};
 
@@ -32,20 +35,29 @@ class _QuizState extends State<Quiz> {
     fetchQuestion();
   }
 
+  void showResult({bool timeout = false}) {
+    streamController.add('pause');
+    if (question['solution'].toString() == selectedNumber) {
+      widget.scoreIncrement();
+    }
+    widget.quizCountIncrement();
+    answerStatusPopup(context, selectedNumber, question['solution'].toString(),
+        submitAnswer, widget.exitQuiz,timeout);
+  }
+
   void fetchQuestion() async {
+    streamController.add('pause');
     var response =
         await http.get(Uri.https('marcconrad.com', 'uob/smile/api.php'));
     setState(() {
       question = jsonDecode(response.body);
     });
+    streamController.add('start');
   }
 
   void submitAnswer() {
-    if (question['solution'].toString() == selectedNumber) {
-      widget.scoreIncrement();
-    }
     streamController.add('reset');
-    widget.quizCountIncrement();
+
     selectedNumber = '10';
     fetchQuestion();
   }
@@ -65,7 +77,7 @@ class _QuizState extends State<Quiz> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Timer(
-              submitAnswer: submitAnswer,
+              submitAnswer: showResult,
               stream: streamController.stream,
             ),
             Container(
@@ -83,14 +95,14 @@ class _QuizState extends State<Quiz> {
                     ? Image.network(question['question'])
                     : Container(
                         width: double.infinity,
-                        height: 100,
+                        height: 191,
                         color: Colors.grey,
                       ),
               ),
             ),
             Numberpad(
                 selectNumber: selectNumber,
-                submitAnswer: submitAnswer,
+                submitAnswer: showResult,
                 selectedNumber: selectedNumber)
           ]),
     );

@@ -4,7 +4,7 @@ import 'package:quiz_game/quiz.dart';
 class QuizScreen extends StatefulWidget {
   const QuizScreen({Key? key, required this.switchScreen}) : super(key: key);
 
-  final void Function(String) switchScreen;
+  final void Function(String, {int score, int count}) switchScreen;
   @override
   _QuizScreenState createState() => _QuizScreenState();
 }
@@ -23,6 +23,10 @@ class _QuizScreenState extends State<QuizScreen> {
     setState(() {
       score++;
     });
+  }
+
+  void exitQuiz() {
+    widget.switchScreen('results', score: score, count: quizCount);
   }
 
   @override
@@ -50,9 +54,7 @@ class _QuizScreenState extends State<QuizScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {
-              widget.switchScreen('start');
-            },
+            onPressed:exitQuiz,
             icon: const Icon(Icons.logout),
             style: IconButton.styleFrom(
                 shape: const CircleBorder(), backgroundColor: Colors.white54),
@@ -76,7 +78,8 @@ class _QuizScreenState extends State<QuizScreen> {
               child: Column(children: [
                 Quiz(
                     scoreIncrement: incrementScore,
-                    quizCountIncrement: incrementQuizCount)
+                    quizCountIncrement: incrementQuizCount,
+                    exitQuiz:exitQuiz)
               ]),
             ),
           ),

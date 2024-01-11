@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_game/numberpad_button.dart';
 
-class Numberpad extends StatefulWidget {
+class Numberpad extends StatelessWidget {
   const Numberpad(
       {super.key,
       required this.selectNumber,
@@ -11,11 +11,6 @@ class Numberpad extends StatefulWidget {
   final void Function() submitAnswer;
   final String selectedNumber;
 
-  @override
-  _NumberpadState createState() => _NumberpadState();
-}
-
-class _NumberpadState extends State<Numberpad> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,19 +27,17 @@ class _NumberpadState extends State<Numberpad> {
             children: [
               NumberpadButton(
                 text: '1',
-                onPressed: 
-                    widget.selectNumber
-                  ,
-                active: widget.selectedNumber == '1',
+                onPressed: selectNumber,
+                active: selectedNumber == '1',
               ),
               NumberpadButton(
                   text: '2',
-                  onPressed: widget.selectNumber,
-                  active: widget.selectedNumber == '2'),
+                  onPressed: selectNumber,
+                  active: selectedNumber == '2'),
               NumberpadButton(
                   text: '3',
-                  onPressed:widget.selectNumber,
-                  active: widget.selectedNumber == '3'),
+                  onPressed: selectNumber,
+                  active: selectedNumber == '3'),
             ],
           ),
           Row(
@@ -52,16 +45,16 @@ class _NumberpadState extends State<Numberpad> {
             children: [
               NumberpadButton(
                   text: '4',
-                  onPressed:widget.selectNumber,
-                  active: widget.selectedNumber == '4'),
+                  onPressed: selectNumber,
+                  active: selectedNumber == '4'),
               NumberpadButton(
                   text: '5',
-                  onPressed: widget.selectNumber,
-                  active: widget.selectedNumber == '5'),
+                  onPressed: selectNumber,
+                  active: selectedNumber == '5'),
               NumberpadButton(
                   text: '6',
-                  onPressed: widget.selectNumber,
-                  active: widget.selectedNumber == '6'),
+                  onPressed: selectNumber,
+                  active: selectedNumber == '6'),
             ],
           ),
           Row(
@@ -69,16 +62,16 @@ class _NumberpadState extends State<Numberpad> {
             children: [
               NumberpadButton(
                   text: '7',
-                  onPressed:widget.selectNumber,
-                  active: widget.selectedNumber == '7'),
+                  onPressed: selectNumber,
+                  active: selectedNumber == '7'),
               NumberpadButton(
                   text: '8',
-                  onPressed: widget.selectNumber,
-                  active: widget.selectedNumber == '8'),
+                  onPressed: selectNumber,
+                  active: selectedNumber == '8'),
               NumberpadButton(
                   text: '9',
-                  onPressed: widget.selectNumber,
-                  active: widget.selectedNumber == '9'),
+                  onPressed: selectNumber,
+                  active: selectedNumber == '9'),
             ],
           ),
           Row(
@@ -86,8 +79,8 @@ class _NumberpadState extends State<Numberpad> {
             children: [
               NumberpadButton(
                   text: '0',
-                  onPressed: widget.selectNumber,
-                  active: widget.selectedNumber == '0'),
+                  onPressed: selectNumber,
+                  active: selectedNumber == '0'),
               const SizedBox(
                 width: 10,
               ),
@@ -100,7 +93,7 @@ class _NumberpadState extends State<Numberpad> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                onPressed: widget.submitAnswer,
+                onPressed: submitAnswer,
                 child: Stack(children: [
                   Text(
                     'Submit',

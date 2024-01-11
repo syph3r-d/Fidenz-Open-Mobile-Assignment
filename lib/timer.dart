@@ -4,15 +4,15 @@ class Timer extends StatefulWidget {
   const Timer({Key? key, required this.submitAnswer, required this.stream})
       : super(key: key);
 
-  final void Function() submitAnswer;
+  final void Function({bool timeout}) submitAnswer;
   final Stream<String> stream;
 
   @override
   _TimerState createState() => _TimerState();
 }
 
-
-class _TimerState extends State<Timer> with SingleTickerProviderStateMixin {
+class _TimerState extends State<Timer>
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   AnimationController? controller;
   Animation<double>? animation;
   double? animationValue;
@@ -23,6 +23,7 @@ class _TimerState extends State<Timer> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     time = 0;
     totalTime = 10;
     isFinished = false;
@@ -39,13 +40,36 @@ class _TimerState extends State<Timer> with SingleTickerProviderStateMixin {
       })
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          widget.submitAnswer();
+          widget.submitAnswer(timeout: true);
         }
       });
-    controller!.forward();
     widget.stream.listen((event) {
       if (event == 'reset') {
         resetTimer();
+      }
+      if (event == 'start') {
+        controller!.forward();
+      }
+      if (event == 'pause') {
+        controller!.stop();
+      }
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    setState(() {
+      if (state == AppLifecycleState.paused) {
+        controller!.stop();
+      }
+      if (state == AppLifecycleState.resumed) {
+        controller!.forward();
+      }
+      if (state == AppLifecycleState.inactive) {
+        controller!.stop();
+      }
+      if (state == AppLifecycleState.detached) {
+        controller!.stop();
       }
     });
   }
@@ -53,6 +77,7 @@ class _TimerState extends State<Timer> with SingleTickerProviderStateMixin {
   @override
   void dispose() {
     controller!.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
