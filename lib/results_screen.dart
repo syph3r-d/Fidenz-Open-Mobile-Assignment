@@ -33,8 +33,8 @@ class ResultsScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.emoji_emotions,
-                  size: 100.0, color: Colors.amber),
+              Image.asset('assets/images/smiley-face-png-from-pngfre-9.png',
+                  width: 100),
               const SizedBox(height: 50.0),
               Text(
                 'Your score is $score/$count',
