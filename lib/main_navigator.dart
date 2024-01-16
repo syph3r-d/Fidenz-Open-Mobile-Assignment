@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_game/quiz_screen.dart';
-import 'package:quiz_game/start_screen.dart';
-import 'package:quiz_game/results_screen.dart';
+import 'package:quiz_game/screens/quiz/quiz_screen.dart';
+import 'package:quiz_game/screens/sign_in_screen.dart';
+import 'package:quiz_game/screens/start_screen.dart';
+import 'package:quiz_game/screens/results_screen.dart';
+import 'package:quiz_game/services/auth.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_game/models/QuizUser.dart';
 
 class MainNavigator extends StatefulWidget {
   const MainNavigator({super.key});
@@ -18,7 +22,7 @@ class _MainNavigatorState extends State<MainNavigator> {
     activeScreen = StartScreen(switchScreen: switchScreen);
   }
 
-  void switchScreen(String screen, {int score = 0, int count=0}) {
+  void switchScreen(String screen, {int score = 0, int count = 0}) {
     setState(() {
       if (screen == 'start') {
         activeScreen = StartScreen(switchScreen: switchScreen);
@@ -27,16 +31,24 @@ class _MainNavigatorState extends State<MainNavigator> {
         activeScreen = QuizScreen(switchScreen: switchScreen);
       }
       if (screen == 'results') {
-        activeScreen = ResultsScreen(score: score,count: count, switchScreen: switchScreen);
+        activeScreen = ResultsScreen(
+            score: score, count: count, switchScreen: switchScreen);
+      }
+      if (screen == 'login') {
+        activeScreen = SignInScreen(switchScreen: switchScreen);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'The Smile Game',
-      home: activeScreen,
+    return StreamProvider<QuizUser?>.value(
+      value: AuthService().user,
+      initialData: null,
+      child: MaterialApp(
+        title: 'The Smile Game',
+        home: activeScreen,
+      ),
     );
   }
 }

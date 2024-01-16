@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_game/numberpad_button.dart';
+import 'package:quiz_game/components/numberpad/numberpad_button.dart';
 
 class Numberpad extends StatelessWidget {
   const Numberpad(

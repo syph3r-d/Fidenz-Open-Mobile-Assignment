@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_game/quiz.dart';
+import 'package:quiz_game/screens/quiz/quiz.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({Key? key, required this.switchScreen}) : super(key: key);

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "556284932857",
+    "project_id": "fidenz-quiz-app",
+    "storage_bucket": "fidenz-quiz-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556284932857:android:eba6c54dd539f0a799e828",
+        "android_client_info": {
+          "package_name": "com.SadeepaFidenz.quiz_game"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD66Tfxs2eSCwzNewZrcviB-mxOrTANCwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

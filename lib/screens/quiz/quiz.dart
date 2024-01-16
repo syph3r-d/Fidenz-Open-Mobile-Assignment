@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:quiz_game/numberpad.dart';
-import 'package:quiz_game/answer_status_popup.dart';
+import 'package:quiz_game/components/numberpad/numberpad.dart';
+import 'package:quiz_game/popups/answer_status_popup.dart';
 import 'package:http/http.dart' as http;
-import 'package:quiz_game/timer.dart';
+import 'package:quiz_game/components/timer/timer.dart';
 import 'dart:async';
 
 StreamController<String> streamController =
