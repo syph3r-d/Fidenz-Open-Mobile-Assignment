@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_game/components/loading.dart';
+import 'package:quiz_game/models/QuizUser.dart';
 import 'package:quiz_game/screens/quiz/quiz.dart';
+import 'package:quiz_game/services/database.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({Key? key, required this.switchScreen}) : super(key: key);
@@ -12,6 +16,7 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   int quizCount = 0;
   int score = 0;
+  bool loading = false;
 
   void incrementQuizCount() {
     setState(() {
@@ -25,12 +30,22 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
-  void exitQuiz() {
+  void exitQuiz(uid, name) async {
+    setState(() {
+      loading = true;
+    });
+    if (uid != null) {
+      await DatabaseService().updateUserScore(uid, score, name);
+    }
+    setState(() {
+      loading = false;
+    });
     widget.switchScreen('results', score: score, count: quizCount);
   }
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<QuizUser?>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text.rich(TextSpan(
@@ -54,7 +69,9 @@ class _QuizScreenState extends State<QuizScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed:exitQuiz,
+            onPressed: () {
+              exitQuiz(user?.uid,user?.displayName);
+            },
             icon: const Icon(Icons.logout),
             style: IconButton.styleFrom(
                 shape: const CircleBorder(), backgroundColor: Colors.white54),
@@ -79,7 +96,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 Quiz(
                     scoreIncrement: incrementScore,
                     quizCountIncrement: incrementQuizCount,
-                    exitQuiz:exitQuiz)
+                    exitQuiz: exitQuiz)
               ]),
             ),
           ),
@@ -127,12 +144,13 @@ class _QuizScreenState extends State<QuizScreen> {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.greenAccent[400])),
                       ],
-                    )),
+                    ))
                   ],
                 ),
               ),
             ),
           ),
+          loading ? const Loading() : SizedBox.shrink()
         ],
       ),
     );

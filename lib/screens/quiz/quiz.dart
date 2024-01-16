@@ -19,13 +19,13 @@ class Quiz extends StatefulWidget {
 
   final void Function() scoreIncrement;
   final void Function() quizCountIncrement;
-  final void Function() exitQuiz;
+  final void Function(String, String) exitQuiz;
 
   @override
   _QuizState createState() => _QuizState();
 }
 
-class _QuizState extends State<Quiz>  {
+class _QuizState extends State<Quiz> {
   String selectedNumber = '10';
   Map<String, dynamic> question = {};
 
@@ -42,7 +42,7 @@ class _QuizState extends State<Quiz>  {
     }
     widget.quizCountIncrement();
     answerStatusPopup(context, selectedNumber, question['solution'].toString(),
-        submitAnswer, widget.exitQuiz,timeout);
+        submitAnswer, widget.exitQuiz, timeout);
   }
 
   void fetchQuestion() async {
@@ -92,7 +92,11 @@ class _QuizState extends State<Quiz>  {
                 borderRadius: BorderRadius.circular(20),
                 child: question['question'] != null &&
                         question['question'] is String
-                    ? Image.network(question['question'])
+                    ? Image.network(
+                        question['question'],
+                        height: 191,
+                        width: double.infinity,
+                      )
                     : Container(
                         width: double.infinity,
                         height: 191,

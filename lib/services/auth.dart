@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:quiz_game/models/QuizUser.dart';
+import 'package:quiz_game/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -17,12 +18,14 @@ class AuthService {
   // }
 
   QuizUser? _userFromFirebaseUser(User? user) {
-    return user != null ? QuizUser(uid: user.uid) : null;
+    return user != null
+        ? QuizUser(uid: user.uid, displayName: user.displayName ?? 'No name')
+        : null;
   }
 
   // Auth change user stream
   Stream<QuizUser?> get user {
-     return _auth.authStateChanges().map(_userFromFirebaseUser);
+    return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
   // Sign in with email and password
@@ -39,11 +42,17 @@ class AuthService {
   }
 
   // Register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(
+      String email, String password, String displayName) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email.trim(), password: password);
       User? user = result.user;
+
+      await user!.updateDisplayName(displayName);
+
+      // Create a new document for the user with the uid
+      await DatabaseService().updateUserScore(user!.uid, 0, displayName);
       return user;
     } catch (e) {
       print(e.toString());

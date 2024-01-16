@@ -1,6 +1,6 @@
 class QuizUser {
-  QuizUser({required this.uid});
-  
-  final String uid;
+  QuizUser({required this.uid, required this.displayName});
 
+  final String uid;
+  final String displayName;
 }

@@ -42,6 +42,11 @@ class StartScreen extends StatelessWidget {
                   child: const Text('Start Game')),
               ElevatedButton(
                   onPressed: () {
+                    switchScreen('leaderboard');
+                  },
+                  child: const Text('Leaderboard')),
+              ElevatedButton(
+                  onPressed: () {
                     if (user == null) {
                       switchScreen('login');
                     } else {

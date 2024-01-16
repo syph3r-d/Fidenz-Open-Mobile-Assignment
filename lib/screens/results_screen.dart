@@ -45,7 +45,12 @@ class ResultsScreen extends StatelessWidget {
                   onPressed: () {
                     switchScreen('quiz');
                   },
-                  child: const Text('Play Again'))
+                  child: const Text('Play Again')),
+              ElevatedButton(
+                  onPressed: () {
+                    switchScreen('leaderboard');
+                  },
+                  child: const Text('Leaderboard'))
             ],
           ),
         ),

@@ -16,6 +16,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String email = '';
   String password = '';
   String confirmPassword = '';
+  String name = '';
   bool loading = false;
   final _formKey = GlobalKey<FormState>();
   @override
@@ -54,6 +55,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Form(
               key: _formKey,
               child: Column(children: [
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  validator: (val) => val!.isEmpty ? 'Enter a name' : null,
+                  decoration: const InputDecoration(
+                    hintText: 'Name',
+                    fillColor: Colors.white,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 2.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple, width: 2.0),
+                    ),
+                  ),
+                  onChanged: (value) => setState(() => name = value),
+                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -127,7 +146,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         }
                         setState(() => loading = true);
                         dynamic results = await widget._auth
-                            .registerWithEmailAndPassword(email, password);
+                            .registerWithEmailAndPassword(
+                                email, password, name);
                         if (results == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
