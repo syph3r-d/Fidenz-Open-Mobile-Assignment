@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_game/components/loading.dart';
 import 'package:quiz_game/services/auth.dart';
+import 'package:quiz_game/components/loading.dart';
 
-class SignInScreen extends StatefulWidget {
-  SignInScreen({super.key, required this.switchScreen});
+class SignUpScreen extends StatefulWidget {
+  SignUpScreen({super.key, required this.switchScreen});
 
   final void Function(String) switchScreen;
   final AuthService _auth = AuthService();
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   String email = '';
   String password = '';
-  final _formKey = GlobalKey<FormState>();
+  String confirmPassword = '';
   bool loading = false;
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Login ',
+          'Signup ',
           style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -94,31 +95,60 @@ class _SignInScreenState extends State<SignInScreen> {
                 SizedBox(
                   height: 20,
                 ),
+                TextFormField(
+                  obscureText: true,
+                  validator: (val) => val!.isEmpty ? 'Enter a password' : null,
+                  decoration: const InputDecoration(
+                    hintText: 'Confirm Password',
+                    fillColor: Colors.white,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 2.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple, width: 2.0),
+                    ),
+                  ),
+                  onChanged: (value) => setState(() => confirmPassword = value),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 ElevatedButton(
                     onPressed: () async {
-                      setState(() => loading = true);
                       if (_formKey.currentState!.validate()) {
-                        dynamic results = await widget._auth
-                            .signInWithEmailAndPassword(email, password);
-                        if (results == null) {
+                        if (password != confirmPassword) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Invalid login')));
-                          setState(() {
-                            loading = false;
-                          });
+                            const SnackBar(
+                              content: Text('Passwords do not match'),
+                            ),
+                          );
                           return;
                         }
-                        setState(() {
-                          loading = false;
-                        });
+                        setState(() => loading = true);
+                        dynamic results = await widget._auth
+                            .registerWithEmailAndPassword(email, password);
+                        if (results == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Register failed'),
+                            ),
+                          );
+                          setState(() => loading = false);
+
+                          return;
+                        }
+                        setState(() => loading = false);
+
                         widget.switchScreen('start');
                       }
                     },
-                    child: const Text('Login')),
+                    child: const Text('Sign Up')),
               ]),
             )),
         loading ? const Loading() : const SizedBox.shrink(),
       ]),
     );
+    ;
   }
 }

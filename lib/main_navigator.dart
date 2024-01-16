@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_game/screens/quiz/quiz_screen.dart';
 import 'package:quiz_game/screens/sign_in_screen.dart';
+import 'package:quiz_game/screens/sign_up_screen.dart';
 import 'package:quiz_game/screens/start_screen.dart';
 import 'package:quiz_game/screens/results_screen.dart';
 import 'package:quiz_game/services/auth.dart';
@@ -36,6 +37,9 @@ class _MainNavigatorState extends State<MainNavigator> {
       }
       if (screen == 'login') {
         activeScreen = SignInScreen(switchScreen: switchScreen);
+      }
+      if (screen == 'signup') {
+        activeScreen = SignUpScreen(switchScreen: switchScreen);
       }
     });
   }
