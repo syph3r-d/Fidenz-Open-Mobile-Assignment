@@ -19,7 +19,7 @@ class Quiz extends StatefulWidget {
 
   final void Function() scoreIncrement;
   final void Function() quizCountIncrement;
-  final void Function(String, String) exitQuiz;
+  final void Function(BuildContext ,String, String) exitQuiz;
 
   @override
   _QuizState createState() => _QuizState();

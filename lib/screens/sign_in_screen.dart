@@ -3,9 +3,8 @@ import 'package:quiz_game/components/loading.dart';
 import 'package:quiz_game/services/auth.dart';
 
 class SignInScreen extends StatefulWidget {
-  SignInScreen({super.key, required this.switchScreen});
+  SignInScreen({super.key});
 
-  final void Function(String) switchScreen;
   final AuthService _auth = AuthService();
 
   @override
@@ -35,16 +34,6 @@ class _SignInScreenState extends State<SignInScreen> {
               ]),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              widget.switchScreen('start');
-            },
-            icon: const Icon(Icons.arrow_back),
-            style: IconButton.styleFrom(
-                shape: const CircleBorder(), backgroundColor: Colors.white54),
-          )
-        ],
         backgroundColor: Colors.purple,
       ),
       body: Stack(children: [
@@ -111,7 +100,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         setState(() {
                           loading = false;
                         });
-                        widget.switchScreen('start');
+                        Navigator.pop(context);
                       }
                     },
                     child: const Text('Login')),

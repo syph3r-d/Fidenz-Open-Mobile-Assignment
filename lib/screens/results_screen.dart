@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_game/screens/leaderboard_screen.dart';
+import 'package:quiz_game/screens/quiz/quiz_screen.dart';
 
 class ResultsScreen extends StatelessWidget {
-  const ResultsScreen(
-      {super.key,
-      required this.score,
-      required this.switchScreen,
-      required this.count});
+  const ResultsScreen({super.key, required this.score, required this.count});
 
   final int score;
-  final void Function(String) switchScreen;
   final int count;
 
   @override
@@ -38,17 +35,23 @@ class ResultsScreen extends StatelessWidget {
               const SizedBox(height: 50.0),
               Text(
                 'Your score is $score/$count',
-                style: TextStyle(fontSize: 25, color: Colors.white),
+                style: const TextStyle(fontSize: 25, color: Colors.white),
               ),
               const SizedBox(height: 50.0),
               ElevatedButton(
                   onPressed: () {
-                    switchScreen('quiz');
+                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const QuizScreen()));
                   },
                   child: const Text('Play Again')),
               ElevatedButton(
                   onPressed: () {
-                    switchScreen('leaderboard');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>const LeaderboardScreen()));
+                    ;
                   },
                   child: const Text('Leaderboard'))
             ],

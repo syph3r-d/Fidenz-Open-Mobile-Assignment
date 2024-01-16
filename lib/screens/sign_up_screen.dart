@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_game/screens/leaderboard_screen.dart';
+import 'package:quiz_game/screens/start_screen.dart';
 import 'package:quiz_game/services/auth.dart';
 import 'package:quiz_game/components/loading.dart';
 
 class SignUpScreen extends StatefulWidget {
-  SignUpScreen({super.key, required this.switchScreen});
+  SignUpScreen({super.key});
 
-  final void Function(String) switchScreen;
   final AuthService _auth = AuthService();
 
   @override
@@ -40,7 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              widget.switchScreen('start');
+              Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back),
             style: IconButton.styleFrom(
@@ -51,11 +52,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
       body: Stack(children: [
         Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Form(
               key: _formKey,
               child: Column(children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
@@ -73,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   onChanged: (value) => setState(() => name = value),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
@@ -92,7 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   onChanged: (value) => setState(() => email = value),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
@@ -111,7 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   onChanged: (value) => setState(() => password = value),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
@@ -130,7 +131,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   onChanged: (value) => setState(() => confirmPassword = value),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
@@ -160,7 +161,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         }
                         setState(() => loading = false);
 
-                        widget.switchScreen('start');
+                        Navigator.pop(context);
                       }
                     },
                     child: const Text('Sign Up')),
@@ -169,6 +170,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
         loading ? const Loading() : const SizedBox.shrink(),
       ]),
     );
-    ;
   }
 }

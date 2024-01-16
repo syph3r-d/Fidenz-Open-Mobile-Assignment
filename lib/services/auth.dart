@@ -52,7 +52,7 @@ class AuthService {
       await user!.updateDisplayName(displayName);
 
       // Create a new document for the user with the uid
-      await DatabaseService().updateUserScore(user!.uid, 0, displayName);
+      await DatabaseService().updateUserScore(user.uid, 0, displayName);
       return user;
     } catch (e) {
       print(e.toString());

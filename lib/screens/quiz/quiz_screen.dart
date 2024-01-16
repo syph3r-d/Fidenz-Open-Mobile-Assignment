@@ -3,12 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:quiz_game/components/loading.dart';
 import 'package:quiz_game/models/QuizUser.dart';
 import 'package:quiz_game/screens/quiz/quiz.dart';
+import 'package:quiz_game/screens/results_screen.dart';
 import 'package:quiz_game/services/database.dart';
 
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({Key? key, required this.switchScreen}) : super(key: key);
+  const QuizScreen({Key? key}) : super(key: key);
 
-  final void Function(String, {int score, int count}) switchScreen;
+  // final void Function(String, {int score, int count}) switchScreen;
   @override
   _QuizScreenState createState() => _QuizScreenState();
 }
@@ -30,7 +31,7 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
-  void exitQuiz(uid, name) async {
+  void exitQuiz(BuildContext context, uid, name) async {
     setState(() {
       loading = true;
     });
@@ -40,7 +41,14 @@ class _QuizScreenState extends State<QuizScreen> {
     setState(() {
       loading = false;
     });
-    widget.switchScreen('results', score: score, count: quizCount);
+    Navigator.pop(context);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                ResultsScreen(score: score, count: quizCount)));
+
+    // widget.switchScreen('results', score: score, count: quizCount);
   }
 
   @override
@@ -70,7 +78,7 @@ class _QuizScreenState extends State<QuizScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              exitQuiz(user?.uid,user?.displayName);
+              exitQuiz(context, user?.uid, user?.displayName);
             },
             icon: const Icon(Icons.logout),
             style: IconButton.styleFrom(
@@ -90,7 +98,7 @@ class _QuizScreenState extends State<QuizScreen> {
               ),
             ),
             child: Container(
-              margin: EdgeInsets.only(top: 50),
+              margin: const EdgeInsets.only(top: 50),
               height: double.infinity,
               child: Column(children: [
                 Quiz(
@@ -150,7 +158,7 @@ class _QuizScreenState extends State<QuizScreen> {
               ),
             ),
           ),
-          loading ? const Loading() : SizedBox.shrink()
+          loading ? const Loading() : const SizedBox.shrink()
         ],
       ),
     );

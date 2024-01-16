@@ -21,32 +21,9 @@ class _MainNavigatorState extends State<MainNavigator> {
 
   void initState() {
     super.initState();
-    activeScreen = StartScreen(switchScreen: switchScreen);
+    activeScreen = StartScreen();
   }
 
-  void switchScreen(String screen, {int score = 0, int count = 0}) {
-    setState(() {
-      if (screen == 'start') {
-        activeScreen = StartScreen(switchScreen: switchScreen);
-      }
-      if (screen == 'quiz') {
-        activeScreen = QuizScreen(switchScreen: switchScreen);
-      }
-      if (screen == 'results') {
-        activeScreen = ResultsScreen(
-            score: score, count: count, switchScreen: switchScreen);
-      }
-      if (screen == 'login') {
-        activeScreen = SignInScreen(switchScreen: switchScreen);
-      }
-      if (screen == 'signup') {
-        activeScreen = SignUpScreen(switchScreen: switchScreen);
-      }
-      if (screen == 'leaderboard') {
-        activeScreen = LeaderboardScreen(switchScreen: switchScreen);
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

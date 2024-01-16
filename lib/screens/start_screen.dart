@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_game/models/QuizUser.dart';
+import 'package:quiz_game/screens/leaderboard_screen.dart';
+import 'package:quiz_game/screens/quiz/quiz.dart';
+import 'package:quiz_game/screens/quiz/quiz_screen.dart';
+import 'package:quiz_game/screens/sign_in_screen.dart';
+import 'package:quiz_game/screens/sign_up_screen.dart';
 import 'package:quiz_game/services/auth.dart';
 
 class StartScreen extends StatelessWidget {
-  StartScreen({Key? key, required this.switchScreen}) : super(key: key);
+  StartScreen({Key? key}) : super(key: key);
 
-  final void Function(String) switchScreen;
   final AuthService _auth = AuthService();
+
+  void dummyFunction(String screen, {int score = 0, int count = 0}) {}
 
   @override
   Widget build(BuildContext context) {
@@ -37,18 +43,25 @@ class StartScreen extends StatelessWidget {
               const SizedBox(height: 50.0),
               ElevatedButton(
                   onPressed: () {
-                    switchScreen('quiz');
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => QuizScreen()));
                   },
                   child: const Text('Start Game')),
               ElevatedButton(
                   onPressed: () {
-                    switchScreen('leaderboard');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LeaderboardScreen()));
                   },
                   child: const Text('Leaderboard')),
               ElevatedButton(
                   onPressed: () {
                     if (user == null) {
-                      switchScreen('login');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignInScreen()));
                     } else {
                       _auth.signOut();
                     }
@@ -57,7 +70,10 @@ class StartScreen extends StatelessWidget {
               user == null
                   ? ElevatedButton(
                       onPressed: () {
-                        switchScreen('signup');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpScreen()));
                       },
                       child: const Text('Sign Up'))
                   : const SizedBox(),
