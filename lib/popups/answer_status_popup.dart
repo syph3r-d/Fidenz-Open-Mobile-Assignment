@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:quiz_game/models/QuizUser.dart';
 
 void answerStatusPopup(BuildContext context, String answer, String correct,
     Function submitAnswer, Function exitQuiz, bool timeout) {
   bool isCorrect = answer == correct;
-  final user = Provider.of<QuizUser?>(context, listen: false);
   showDialog(
       context: context,
       builder: (BuildContext context) {

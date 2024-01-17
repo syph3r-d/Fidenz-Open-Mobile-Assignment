@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:quiz_game/assets/constants.dart';
 import 'package:quiz_game/models/QuizUser.dart';
 import 'package:quiz_game/screens/leaderboard_screen.dart';
-import 'package:quiz_game/screens/quiz/quiz.dart';
 import 'package:quiz_game/screens/quiz/quiz_screen.dart';
 import 'package:quiz_game/screens/result_history.dart';
 import 'package:quiz_game/screens/sign_in_screen.dart';

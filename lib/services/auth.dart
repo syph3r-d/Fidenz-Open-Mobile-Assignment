@@ -1,21 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:quiz_game/models/QuizUser.dart';
-import 'package:quiz_game/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  // Sign in anonymously
-  // Future signInAnon() async {
-  //   try {
-  //     UserCredential result = await _auth.signInAnonymously();
-  //     User? user = result.user;
-  //     return user;
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
 
   QuizUser? _userFromFirebaseUser(User? user) {
     return user != null

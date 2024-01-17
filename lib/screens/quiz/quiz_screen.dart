@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_game/assets/constants.dart';
@@ -76,7 +74,7 @@ class _QuizScreenState extends State<QuizScreen> {
           children: <InlineSpan>[
             TextSpan(
                 text: user != null ? user.displayName : GUEST_NAME,
-                style: TextStyle(fontWeight: FontWeight.normal)),
+                style: const TextStyle(fontWeight: FontWeight.normal)),
           ],
         )),
         centerTitle: true,

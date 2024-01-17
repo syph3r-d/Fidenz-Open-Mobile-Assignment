@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_game/assets/constants.dart';
-import 'package:quiz_game/screens/leaderboard_screen.dart';
-import 'package:quiz_game/screens/start_screen.dart';
 import 'package:quiz_game/services/auth.dart';
 import 'package:quiz_game/components/loading.dart';
 
