@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_game/assets/constants.dart';
 import 'package:quiz_game/components/loading.dart';
 import 'package:quiz_game/services/auth.dart';
 
@@ -21,7 +22,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Login ',
+          MENU_LOGIN,
           style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -103,7 +104,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         Navigator.pop(context);
                       }
                     },
-                    child: const Text('Login')),
+                    child: const Text(MENU_LOGIN)),
               ]),
             )),
         loading ? const Loading() : const SizedBox.shrink(),

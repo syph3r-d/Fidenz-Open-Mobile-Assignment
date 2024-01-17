@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_game/assets/constants.dart';
 import 'package:quiz_game/components/loading.dart';
 import 'package:quiz_game/models/QuizUser.dart';
 import 'package:quiz_game/services/database.dart';
@@ -40,7 +41,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'The Smile Game',
+          APP_NAME,
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.purple,
@@ -50,7 +51,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
             child: Column(children: [
           const SizedBox(height: 20.0),
           const Text(
-            'Leaderboard',
+            MENU_LEADERBOARD,
             style: TextStyle(fontSize: 25, color: Color.fromARGB(255, 0, 0, 0)),
           ),
           const SizedBox(height: 20.0),
@@ -58,7 +59,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
             child: ListView.builder(
                 itemCount: leaderboard.length,
                 itemBuilder: (context, index) {
-                  bool isCurrentUser = leaderboard[index]['uid'] == user?.uid;
+                  bool isCurrentUser =
+                      leaderboard[index][USER_UID] == user?.uid;
                   return ListTile(
                     tileColor: isCurrentUser
                         ? Colors.purpleAccent
@@ -69,12 +71,12 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                           const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                     ),
                     title: Text(
-                      '${leaderboard[index]['displayName']}',
+                      '${leaderboard[index][USER_DISPLAY_NAME]}',
                       style:
                           const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                     ),
                     trailing: Text(
-                      '${leaderboard[index]['score']}',
+                      '${leaderboard[index][SCORE_FIELD]}',
                       style:
                           const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                     ),

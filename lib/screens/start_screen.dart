@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_game/assets/constants.dart';
 import 'package:quiz_game/models/QuizUser.dart';
 import 'package:quiz_game/screens/leaderboard_screen.dart';
 import 'package:quiz_game/screens/quiz/quiz.dart';
@@ -17,67 +19,82 @@ class StartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var ctime;
     final user = Provider.of<QuizUser?>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'The Smile Game',
+          APP_NAME,
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.purple,
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.purple, Colors.purpleAccent],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+      body: PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) {
+          DateTime now = DateTime.now();
+          if (ctime == null || now.difference(ctime) > Duration(seconds: 1)) {
+            ctime = now;
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text(EXIT_APP_MSG)));
+            return;
+          }
+          SystemNavigator.pop();
+        },
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.purple, Colors.purpleAccent],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
           ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/images/smiley-face-png-from-pngfre-9.png',
-                  width: 100),
-              const SizedBox(height: 50.0),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => QuizScreen()));
-                  },
-                  child: const Text('Start Game')),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LeaderboardScreen()));
-                  },
-                  child: const Text('Leaderboard')),
-              ElevatedButton(
-                  onPressed: () {
-                    if (user == null) {
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(SMILEY_FACE_IMAGE, width: 100),
+                const SizedBox(height: 50.0),
+                ElevatedButton(
+                    onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignInScreen()));
-                    } else {
-                      _auth.signOut();
-                    }
-                  },
-                  child: Text(user == null ? 'Login' : 'Logout')),
-              user == null
-                  ? ElevatedButton(
-                      onPressed: () {
+                              builder: (context) => QuizScreen()));
+                    },
+                    child: const Text(MENU_START_GAME)),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LeaderboardScreen()));
+                    },
+                    child: const Text(MENU_LEADERBOARD)),
+                ElevatedButton(
+                    onPressed: () {
+                      if (user == null) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignUpScreen()));
-                      },
-                      child: const Text('Sign Up'))
-                  : const SizedBox(),
-            ],
+                                builder: (context) => SignInScreen()));
+                      } else {
+                        _auth.signOut();
+                      }
+                    },
+                    child: Text(user == null ? MENU_LOGIN : MENU_LOGOUT)),
+                user == null
+                    ? ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUpScreen()));
+                        },
+                        child: const Text(MENU_SIGN_UP))
+                    : const SizedBox(),
+              ],
+            ),
           ),
         ),
       ),

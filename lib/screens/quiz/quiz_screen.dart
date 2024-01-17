@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_game/assets/constants.dart';
 import 'package:quiz_game/components/loading.dart';
 import 'package:quiz_game/models/QuizUser.dart';
 import 'package:quiz_game/screens/quiz/quiz.dart';
@@ -31,7 +32,7 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
-  void exitQuiz(BuildContext context, uid, name) async {
+  void exitQuiz(uid, name) async {
     setState(() {
       loading = true;
     });
@@ -56,9 +57,9 @@ class _QuizScreenState extends State<QuizScreen> {
     final user = Provider.of<QuizUser?>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: const Text.rich(TextSpan(
-          text: 'Welcome ',
-          style: TextStyle(
+        title: Text.rich(TextSpan(
+          text: WELCOME_MSG,
+          style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
               shadows: [
@@ -70,7 +71,7 @@ class _QuizScreenState extends State<QuizScreen> {
               ]),
           children: <InlineSpan>[
             TextSpan(
-                text: 'Chalana',
+                text: user != null ? user.displayName : GUEST_NAME,
                 style: TextStyle(fontWeight: FontWeight.normal)),
           ],
         )),
@@ -78,7 +79,7 @@ class _QuizScreenState extends State<QuizScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              exitQuiz(context, user?.uid, user?.displayName);
+              exitQuiz(user?.uid, user?.displayName);
             },
             icon: const Icon(Icons.logout),
             style: IconButton.styleFrom(

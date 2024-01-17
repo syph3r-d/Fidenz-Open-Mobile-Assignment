@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_game/assets/constants.dart';
 import 'package:quiz_game/screens/leaderboard_screen.dart';
 import 'package:quiz_game/screens/quiz/quiz_screen.dart';
 
@@ -13,7 +14,7 @@ class ResultsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'The Smile Game',
+          APP_NAME,
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.purple,
@@ -30,8 +31,7 @@ class ResultsScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/images/smiley-face-png-from-pngfre-9.png',
-                  width: 100),
+              Image.asset(SMILEY_FACE_IMAGE, width: 100),
               const SizedBox(height: 50.0),
               Text(
                 'Your score is $score/$count',
@@ -41,19 +41,21 @@ class ResultsScreen extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const QuizScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const QuizScreen()));
                   },
-                  child: const Text('Play Again')),
+                  child: const Text(MENU_PLAY_AGAIN)),
               ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>const LeaderboardScreen()));
+                            builder: (context) => const LeaderboardScreen()));
                     ;
                   },
-                  child: const Text('Leaderboard'))
+                  child: const Text(MENU_LEADERBOARD))
             ],
           ),
         ),

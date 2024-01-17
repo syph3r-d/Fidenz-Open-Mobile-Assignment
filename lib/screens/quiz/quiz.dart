@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:quiz_game/assets/constants.dart';
 import 'package:quiz_game/components/numberpad/numberpad.dart';
 import 'package:quiz_game/popups/answer_status_popup.dart';
 import 'package:http/http.dart' as http;
@@ -19,7 +20,7 @@ class Quiz extends StatefulWidget {
 
   final void Function() scoreIncrement;
   final void Function() quizCountIncrement;
-  final void Function(BuildContext ,String, String) exitQuiz;
+  final void Function(String, String) exitQuiz;
 
   @override
   _QuizState createState() => _QuizState();
@@ -36,27 +37,31 @@ class _QuizState extends State<Quiz> {
   }
 
   void showResult({bool timeout = false}) {
-    streamController.add('pause');
-    if (question['solution'].toString() == selectedNumber) {
+    streamController.add(TIMER_PAUSE);
+    if (question[SMILE_API_SOLUTION].toString() == selectedNumber) {
       widget.scoreIncrement();
     }
     widget.quizCountIncrement();
-    answerStatusPopup(context, selectedNumber, question['solution'].toString(),
-        submitAnswer, widget.exitQuiz, timeout);
+    answerStatusPopup(
+        context,
+        selectedNumber,
+        question[SMILE_API_SOLUTION].toString(),
+        submitAnswer,
+        widget.exitQuiz,
+        timeout);
   }
 
   void fetchQuestion() async {
-    streamController.add('pause');
-    var response =
-        await http.get(Uri.https('marcconrad.com', 'uob/smile/api.php'));
+    streamController.add(TIMER_PAUSE);
+    var response = await http.get(Uri.https(API_BASE_URL, API_PATH));
     setState(() {
       question = jsonDecode(response.body);
     });
-    streamController.add('start');
+    streamController.add(TIMER_START);
   }
 
   void submitAnswer() {
-    streamController.add('reset');
+    streamController.add(TIMER_RESET);
 
     selectedNumber = '10';
     fetchQuestion();
@@ -90,10 +95,10 @@ class _QuizState extends State<Quiz> {
               ]),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: question['question'] != null &&
-                        question['question'] is String
+                child: question[SMILE_API_QUESTION] != null &&
+                        question[SMILE_API_QUESTION] is String
                     ? Image.network(
-                        question['question'],
+                        question[SMILE_API_QUESTION],
                         height: 191,
                         width: double.infinity,
                       )

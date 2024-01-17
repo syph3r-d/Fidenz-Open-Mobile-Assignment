@@ -27,7 +27,9 @@ void answerStatusPopup(BuildContext context, String answer, String correct,
                     Text(
                       isCorrect
                           ? 'Your Answer is Correct'
-                          : 'Your Answer is Wrong',
+                          : timeout
+                              ? 'Time Out'
+                              : 'Your Answer is Wrong',
                       style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -37,7 +39,7 @@ void answerStatusPopup(BuildContext context, String answer, String correct,
                     const SizedBox(height: 20),
                     Text(
                       timeout
-                          ? 'Time Out'
+                          ? ''
                           : answer == '10'
                               ? "Select an answer next time"
                               : answer != correct
@@ -63,8 +65,7 @@ void answerStatusPopup(BuildContext context, String answer, String correct,
                               ElevatedButton(
                                   onPressed: () {
                                     Navigator.pop(context);
-                                    exitQuiz(
-                                        context, user?.uid, user?.displayName);
+                                    exitQuiz(user?.uid, user?.displayName);
                                   },
                                   child: const Text('Exit'))
                             ],
@@ -72,7 +73,7 @@ void answerStatusPopup(BuildContext context, String answer, String correct,
                         : ElevatedButton(
                             onPressed: () {
                               Navigator.pop(context);
-                              exitQuiz(context, user?.uid, user?.displayName);
+                              exitQuiz(user?.uid, user?.displayName);
                             },
                             child: const Text('Exit'))
                   ],

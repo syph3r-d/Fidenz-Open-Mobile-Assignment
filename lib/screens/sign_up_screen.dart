@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_game/assets/constants.dart';
 import 'package:quiz_game/screens/leaderboard_screen.dart';
 import 'package:quiz_game/screens/start_screen.dart';
 import 'package:quiz_game/services/auth.dart';
@@ -25,7 +26,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Signup ',
+          MENU_SIGN_UP,
           style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -164,7 +165,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Navigator.pop(context);
                       }
                     },
-                    child: const Text('Sign Up')),
+                    child: const Text(MENU_SIGN_UP)),
               ]),
             )),
         loading ? const Loading() : const SizedBox.shrink(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_game/assets/constants.dart';
 
 class Timer extends StatefulWidget {
   const Timer({Key? key, required this.submitAnswer, required this.stream})
@@ -25,7 +26,7 @@ class _TimerState extends State<Timer>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     time = 0;
-    totalTime = 10;
+    totalTime = 30;
     isFinished = false;
     controller = AnimationController(
       vsync: this,
@@ -44,13 +45,13 @@ class _TimerState extends State<Timer>
         }
       });
     widget.stream.listen((event) {
-      if (event == 'reset') {
+      if (event == TIMER_RESET) {
         resetTimer();
       }
-      if (event == 'start') {
+      if (event == TIMER_START) {
         controller!.forward();
       }
-      if (event == 'pause') {
+      if (event == TIMER_PAUSE) {
         controller!.stop();
       }
     });
