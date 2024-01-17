@@ -63,6 +63,10 @@ class StartScreen extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) => QuizScreen()));
                     },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.green,
+                    ),
                     child: const Text(MENU_START_GAME)),
                 ElevatedButton(
                     onPressed: () {
@@ -72,28 +76,6 @@ class StartScreen extends StatelessWidget {
                               builder: (context) => LeaderboardScreen()));
                     },
                     child: const Text(MENU_LEADERBOARD)),
-                ElevatedButton(
-                    onPressed: () {
-                      if (user == null) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignInScreen()));
-                      } else {
-                        _auth.signOut();
-                      }
-                    },
-                    child: Text(user == null ? MENU_LOGIN : MENU_LOGOUT)),
-                user == null
-                    ? ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUpScreen()));
-                        },
-                        child: const Text(MENU_SIGN_UP))
-                    : const SizedBox(),
                 user != null
                     ? ElevatedButton(
                         onPressed: () {
@@ -105,7 +87,34 @@ class StartScreen extends StatelessWidget {
                         },
                         child: const Text(ANSWERS_HISTORY),
                       )
-                    : const SizedBox.shrink()
+                    : const SizedBox.shrink(),
+                ElevatedButton(
+                    onPressed: () {
+                      if (user == null) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignInScreen()));
+                      } else {
+                        _auth.signOut();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor:
+                          user != null ? Colors.white : Colors.deepPurple,
+                      backgroundColor: user != null ? Colors.red : Colors.white,
+                    ),
+                    child: Text(user == null ? MENU_LOGIN : MENU_LOGOUT)),
+                user == null
+                    ? ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUpScreen()));
+                        },
+                        child: const Text(MENU_SIGN_UP))
+                    : const SizedBox(),
               ],
             ),
           ),

@@ -72,11 +72,11 @@ class _QuizState extends State<Quiz> {
         if (mounted) {
           setState(() {
             loading = false;
+            streamController.add(TIMER_START);
           });
         }
       }));
     });
-    streamController.add(TIMER_START);
   }
 
   void submitAnswer() {
