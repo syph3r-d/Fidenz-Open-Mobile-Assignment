@@ -6,10 +6,12 @@ class Numberpad extends StatelessWidget {
       {super.key,
       required this.selectNumber,
       required this.submitAnswer,
-      required this.selectedNumber});
+      required this.selectedNumber,
+      required this.loading});
   final void Function(String) selectNumber;
   final void Function() submitAnswer;
   final String selectedNumber;
+  final bool loading;
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +29,16 @@ class Numberpad extends StatelessWidget {
             children: [
               NumberpadButton(
                 text: '1',
-                onPressed: selectNumber,
+                onPressed: loading ? null : selectNumber,
                 active: selectedNumber == '1',
               ),
               NumberpadButton(
                   text: '2',
-                  onPressed: selectNumber,
+                  onPressed: loading ? null : selectNumber,
                   active: selectedNumber == '2'),
               NumberpadButton(
                   text: '3',
-                  onPressed: selectNumber,
+                  onPressed: loading ? null : selectNumber,
                   active: selectedNumber == '3'),
             ],
           ),
@@ -45,15 +47,15 @@ class Numberpad extends StatelessWidget {
             children: [
               NumberpadButton(
                   text: '4',
-                  onPressed: selectNumber,
+                  onPressed: loading ? null : selectNumber,
                   active: selectedNumber == '4'),
               NumberpadButton(
                   text: '5',
-                  onPressed: selectNumber,
+                  onPressed: loading ? null : selectNumber,
                   active: selectedNumber == '5'),
               NumberpadButton(
                   text: '6',
-                  onPressed: selectNumber,
+                  onPressed: loading ? null : selectNumber,
                   active: selectedNumber == '6'),
             ],
           ),
@@ -62,15 +64,15 @@ class Numberpad extends StatelessWidget {
             children: [
               NumberpadButton(
                   text: '7',
-                  onPressed: selectNumber,
+                  onPressed: loading ? null : selectNumber,
                   active: selectedNumber == '7'),
               NumberpadButton(
                   text: '8',
-                  onPressed: selectNumber,
+                  onPressed: loading ? null : selectNumber,
                   active: selectedNumber == '8'),
               NumberpadButton(
                   text: '9',
-                  onPressed: selectNumber,
+                  onPressed: loading ? null : selectNumber,
                   active: selectedNumber == '9'),
             ],
           ),
@@ -79,7 +81,7 @@ class Numberpad extends StatelessWidget {
             children: [
               NumberpadButton(
                   text: '0',
-                  onPressed: selectNumber,
+                  onPressed: loading ? null : selectNumber,
                   active: selectedNumber == '0'),
               const SizedBox(
                 width: 10,
@@ -93,7 +95,7 @@ class Numberpad extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                onPressed: submitAnswer,
+                onPressed: loading ? null : submitAnswer,
                 child: Stack(children: [
                   Text(
                     'Submit',

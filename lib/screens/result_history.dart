@@ -4,40 +4,45 @@ import 'package:quiz_game/assets/constants.dart';
 import 'package:quiz_game/components/loading.dart';
 import 'package:quiz_game/models/QuizUser.dart';
 import 'package:quiz_game/services/database.dart';
+import 'package:intl/intl.dart';
 
-class LeaderboardScreen extends StatefulWidget {
-  const LeaderboardScreen({super.key});
+class ResultHistory extends StatefulWidget {
+  const ResultHistory({Key? key}) : super(key: key);
 
   @override
-  _LeaderboardScreenState createState() => _LeaderboardScreenState();
+  _ResultHistoryState createState() => _ResultHistoryState();
 }
 
-class _LeaderboardScreenState extends State<LeaderboardScreen> {
+class _ResultHistoryState extends State<ResultHistory> {
+  List<Map<String, dynamic>> history = [];
   bool loading = false;
-  List<Map<String, dynamic>> leaderboard = [];
 
   @override
   void initState() {
     super.initState();
-    getLeaderboard();
+    getUserHistory();
   }
 
-  void getLeaderboard() async {
+  void getUserHistory() async {
     setState(() {
       loading = true;
     });
-    List<Map<String, dynamic>> scores = await DatabaseService().getScores();
-    scores.sort((a, b) => b[HIGHSCORE_FIELD].compareTo(a[HIGHSCORE_FIELD]));
-    print(scores);
+    final user = Provider.of<QuizUser?>(context, listen: false);
+    history = await DatabaseService().getHistory(user!.uid);
+    history
+        .sort((a, b) => b[HISTORY_TIMESTAMP].compareTo(a[HISTORY_TIMESTAMP]));
     setState(() {
-      leaderboard = scores;
       loading = false;
     });
   }
 
+  String getDateTimeFromTimestamp(int timestampInSeconds) {
+    var date = DateTime.fromMillisecondsSinceEpoch(timestampInSeconds * 1000);
+    return DateFormat('dd/MM/yyyy hh:mm').format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<QuizUser?>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -51,38 +56,42 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
             child: Column(children: [
           const SizedBox(height: 20.0),
           const Text(
-            MENU_LEADERBOARD,
+            ANSWERS_HISTORY,
             style: TextStyle(fontSize: 25, color: Color.fromARGB(255, 0, 0, 0)),
           ),
           const SizedBox(height: 20.0),
           Expanded(
             child: ListView.builder(
-                itemCount: leaderboard.length,
+                itemCount: history.length,
                 itemBuilder: (context, index) {
-                  bool isCurrentUser =
-                      leaderboard[index][USER_UID] == user?.uid;
+                  // var date = DateTime.fromMillisecondsSinceEpoch(
+                  //     history[index][HISTORY_TIMESTAMP]);
                   return ListTile(
-                    tileColor: isCurrentUser
-                        ? Colors.purpleAccent
-                        : Colors.transparent,
                     leading: Text(
                       '${index + 1}',
                       style:
                           const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                     ),
+                    isThreeLine: true,
+                    subtitle: Text(
+                      'Total Questions Answered : ${history[index][HISTORY_QUESTIONS]}',
+                      style:
+                          const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                    ),
                     title: Text(
-                      '${leaderboard[index][USER_DISPLAY_NAME]}',
+                      'Score : ${history[index][HISTORY_SCORE]}',
                       style:
                           const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                     ),
                     trailing: Text(
-                      '${leaderboard[index][HIGHSCORE_FIELD]}',
+                      getDateTimeFromTimestamp(
+                          history[index][HISTORY_TIMESTAMP].seconds),
                       style:
                           const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                     ),
                   );
                 }),
-          )
+          ),
         ])),
         loading ? const Loading() : const SizedBox()
       ]),

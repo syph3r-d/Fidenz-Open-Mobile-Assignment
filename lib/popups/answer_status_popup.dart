@@ -65,7 +65,7 @@ void answerStatusPopup(BuildContext context, String answer, String correct,
                               ElevatedButton(
                                   onPressed: () {
                                     Navigator.pop(context);
-                                    exitQuiz(user?.uid, user?.displayName);
+                                    exitQuiz();
                                   },
                                   child: const Text('Exit'))
                             ],
@@ -73,7 +73,7 @@ void answerStatusPopup(BuildContext context, String answer, String correct,
                         : ElevatedButton(
                             onPressed: () {
                               Navigator.pop(context);
-                              exitQuiz(user?.uid, user?.displayName);
+                              exitQuiz();
                             },
                             child: const Text('Exit'))
                   ],

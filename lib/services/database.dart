@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:quiz_game/assets/constants.dart';
+import 'package:quiz_game/models/QuizUser.dart';
 
 class DatabaseService {
   DatabaseService();
@@ -6,20 +8,25 @@ class DatabaseService {
   final CollectionReference scoreCollection =
       FirebaseFirestore.instance.collection('scores');
 
-  Future updateUserScore(String uid, int score, String name) async {
+  Future updateUserScore(
+      String uid, int score, int questions, String name) async {
     Map<String, dynamic>? userScore = await getScoreUser(uid);
     if (userScore == null) {
-      return await scoreCollection.doc(uid).set({
-        'displayName': name,
-        'score': score,
+      await scoreCollection.doc(uid).set({
+        USER_DISPLAY_NAME: name,
+        HIGHSCORE_FIELD: score,
+      });
+    } else if (userScore[HIGHSCORE_FIELD] < score) {
+      await scoreCollection.doc(uid).update({
+        USER_DISPLAY_NAME: name,
+        HIGHSCORE_FIELD: score,
       });
     }
-    if (userScore['score'] < score) {
-      return await scoreCollection.doc(uid).update({
-        'displayName': name,
-        'score': score,
-      });
-    }
+    scoreCollection.doc(uid).collection('history').add({
+      HISTORY_SCORE: score,
+      HISTORY_QUESTIONS: questions,
+      HISTORY_TIMESTAMP: DateTime.now(),
+    });
     return null;
   }
 
@@ -29,11 +36,22 @@ class DatabaseService {
   }
 
   Future<List<Map<String, dynamic>>> getScores() async {
-    return await scoreCollection.get().then((value) =>
-        value.docs.map((e) {
+    return await scoreCollection.get().then((value) => value.docs.map((e) {
           Map<String, dynamic> data = e.data() as Map<String, dynamic>;
-          data['uid'] = e.id;
+          data[USER_UID] = e.id;
           return data;
         }).toList());
+  }
+
+  Future<List<Map<String, dynamic>>> getHistory(String uid) async {
+    return await scoreCollection
+        .doc(uid)
+        .collection('history')
+        .get()
+        .then((value) => value.docs.map((e) {
+              Map<String, dynamic> data = e.data() as Map<String, dynamic>;
+              data[USER_UID] = e.id;
+              return data;
+            }).toList());
   }
 }

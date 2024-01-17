@@ -6,6 +6,7 @@ import 'package:quiz_game/models/QuizUser.dart';
 import 'package:quiz_game/screens/leaderboard_screen.dart';
 import 'package:quiz_game/screens/quiz/quiz.dart';
 import 'package:quiz_game/screens/quiz/quiz_screen.dart';
+import 'package:quiz_game/screens/result_history.dart';
 import 'package:quiz_game/screens/sign_in_screen.dart';
 import 'package:quiz_game/screens/sign_up_screen.dart';
 import 'package:quiz_game/services/auth.dart';
@@ -93,6 +94,18 @@ class StartScreen extends StatelessWidget {
                         },
                         child: const Text(MENU_SIGN_UP))
                     : const SizedBox(),
+                user != null
+                    ? ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ResultHistory()));
+                          ;
+                        },
+                        child: const Text(ANSWERS_HISTORY),
+                      )
+                    : const SizedBox.shrink()
               ],
             ),
           ),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quiz_game/assets/constants.dart';
+import 'package:quiz_game/models/QuizUser.dart';
 import 'package:quiz_game/screens/leaderboard_screen.dart';
 import 'package:quiz_game/screens/quiz/quiz_screen.dart';
+import 'package:quiz_game/screens/result_history.dart';
 
 class ResultsScreen extends StatelessWidget {
   const ResultsScreen({super.key, required this.score, required this.count});
@@ -11,6 +14,7 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<QuizUser?>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -55,7 +59,19 @@ class ResultsScreen extends StatelessWidget {
                             builder: (context) => const LeaderboardScreen()));
                     ;
                   },
-                  child: const Text(MENU_LEADERBOARD))
+                  child: const Text(MENU_LEADERBOARD)),
+              user != null
+                  ? ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ResultHistory()));
+                        ;
+                      },
+                      child: const Text(ANSWERS_HISTORY),
+                    )
+                  : const SizedBox.shrink()
             ],
           ),
         ),

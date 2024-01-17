@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 
 class NumberpadButton extends StatelessWidget {
   const NumberpadButton(
-      {super.key,required this.text, required this.onPressed, required this.active});
+      {super.key,
+      required this.text,
+      required this.onPressed,
+      required this.active});
   final String text;
-  final void Function(String) onPressed;
+  final void Function(String)? onPressed;
   final bool active;
 
   void onButtonPressed() {
-    onPressed(text);
+    if (onPressed != null) {
+      onPressed!(text);
+    }
   }
 
   @override

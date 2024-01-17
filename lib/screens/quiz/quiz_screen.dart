@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_game/assets/constants.dart';
@@ -32,12 +34,14 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
-  void exitQuiz(uid, name) async {
+  void exitQuiz() async {
     setState(() {
       loading = true;
     });
-    if (uid != null) {
-      await DatabaseService().updateUserScore(uid, score, name);
+    final user = Provider.of<QuizUser?>(context, listen: false);
+    if (user != null) {
+      await DatabaseService()
+          .updateUserScore(user.uid, score, quizCount, user.displayName);
     }
     setState(() {
       loading = false;
@@ -78,9 +82,7 @@ class _QuizScreenState extends State<QuizScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {
-              exitQuiz(user?.uid, user?.displayName);
-            },
+            onPressed: exitQuiz,
             icon: const Icon(Icons.logout),
             style: IconButton.styleFrom(
                 shape: const CircleBorder(), backgroundColor: Colors.white54),

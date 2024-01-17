@@ -19,7 +19,7 @@ class AuthService {
 
   QuizUser? _userFromFirebaseUser(User? user) {
     return user != null
-        ? QuizUser(uid: user.uid, displayName: user.displayName ?? 'No name')
+        ? QuizUser(uid: user.uid, displayName: user.displayName ?? 'No Name')
         : null;
   }
 
@@ -50,9 +50,7 @@ class AuthService {
       User? user = result.user;
 
       await user!.updateDisplayName(displayName);
-
-      // Create a new document for the user with the uid
-      await DatabaseService().updateUserScore(user.uid, 0, displayName);
+      await signOut();
       return user;
     } catch (e) {
       print(e.toString());

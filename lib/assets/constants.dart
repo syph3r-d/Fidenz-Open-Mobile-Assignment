@@ -7,6 +7,7 @@ const String EXIT_APP_MSG = 'Press Back Button Again to Exit';
 const String APP_NAME = 'The Smile Game';
 const String WELCOME_MSG = 'Welcome ';
 const String GUEST_NAME = 'Guest';
+const String ANSWERS_HISTORY = 'Answers History';
 
 //menu
 const String MENU_START_GAME = 'Start Game';
@@ -17,7 +18,10 @@ const String MENU_SIGN_UP = 'Sign Up';
 const String MENU_PLAY_AGAIN = 'Play Again';
 
 //database
-const String SCORE_FIELD = 'score';
+const String HIGHSCORE_FIELD = 'highscore';
+const String HISTORY_SCORE = 'score';
+const String HISTORY_QUESTIONS = 'questions';
+const String HISTORY_TIMESTAMP = 'timestamp';
 
 //timer
 const int TIMER_DURATION = 10;
