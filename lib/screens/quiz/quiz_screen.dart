@@ -44,8 +44,7 @@ class _QuizScreenState extends State<QuizScreen> {
     setState(() {
       loading = false;
     });
-    Navigator.pop(context);
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) =>
@@ -59,6 +58,7 @@ class _QuizScreenState extends State<QuizScreen> {
     final user = Provider.of<QuizUser?>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text.rich(TextSpan(
           text: WELCOME_MSG,
           style: const TextStyle(
@@ -88,79 +88,82 @@ class _QuizScreenState extends State<QuizScreen> {
         ],
         backgroundColor: Colors.purple,
       ),
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.purple, Colors.purpleAccent],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-            ),
-            child: Container(
-              margin: const EdgeInsets.only(top: 50),
-              height: double.infinity,
-              child: Column(children: [
-                Quiz(
-                    scoreIncrement: incrementScore,
-                    quizCountIncrement: incrementQuizCount,
-                    exitQuiz: exitQuiz)
-              ]),
-            ),
-          ),
-          Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-              color: Colors.purple,
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromARGB(82, 0, 0, 0),
-                  blurRadius: 10.0,
-                  spreadRadius: 5.0,
-                  offset: Offset(5.0, 5.0),
+      body: PopScope(
+        canPop: false,
+        child: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.purple, Colors.purpleAccent],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
                 ),
-              ],
-            ),
-            child: SizedBox(
-              width: double.infinity,
+              ),
               child: Container(
-                margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text.rich(TextSpan(
-                      text: 'Quiz No : ',
-                      style: const TextStyle(color: Colors.white),
-                      children: <InlineSpan>[
-                        TextSpan(
-                            text: '$quizCount',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.greenAccent[400])),
-                      ],
-                    )),
-                    Text.rich(TextSpan(
-                      text: 'Score : ',
-                      style: const TextStyle(color: Colors.white),
-                      children: <InlineSpan>[
-                        TextSpan(
-                            text: '$score',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.greenAccent[400])),
-                      ],
-                    ))
-                  ],
+                margin: const EdgeInsets.only(top: 50),
+                height: double.infinity,
+                child: Column(children: [
+                  Quiz(
+                      scoreIncrement: incrementScore,
+                      quizCountIncrement: incrementQuizCount,
+                      exitQuiz: exitQuiz)
+                ]),
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+                color: Colors.purple,
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromARGB(82, 0, 0, 0),
+                    blurRadius: 10.0,
+                    spreadRadius: 5.0,
+                    offset: Offset(5.0, 5.0),
+                  ),
+                ],
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                child: Container(
+                  margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text.rich(TextSpan(
+                        text: 'Quiz No : ',
+                        style: const TextStyle(color: Colors.white),
+                        children: <InlineSpan>[
+                          TextSpan(
+                              text: '$quizCount',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.greenAccent[400])),
+                        ],
+                      )),
+                      Text.rich(TextSpan(
+                        text: 'Score : ',
+                        style: const TextStyle(color: Colors.white),
+                        children: <InlineSpan>[
+                          TextSpan(
+                              text: '$score',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.greenAccent[400])),
+                        ],
+                      ))
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          loading ? const Loading() : const SizedBox.shrink()
-        ],
+            loading ? const Loading() : const SizedBox.shrink()
+          ],
+        ),
       ),
     );
   }
